@@ -51,7 +51,7 @@ export const Navbar = () => {
               key={l.to}
               to={l.to}
               end={l.to === "/"}
-              className={({ isActive }) =>
+              className={({ isActive }: { isActive: boolean }) =>
                 cn(
                   "text-[15px] font-medium transition-colors relative py-2",
                   isActive ? "text-brand" : "text-foreground/80 hover:text-brand"
@@ -89,7 +89,7 @@ export const Navbar = () => {
                 to={l.to}
                 end={l.to === "/"}
                 onClick={() => setOpen(false)}
-                className={({ isActive }) =>
+                className={({ isActive }: { isActive: boolean }) =>
                   cn(
                     "px-2 py-3 font-medium border-b border-border last:border-0",
                     isActive ? "text-brand" : "text-foreground"

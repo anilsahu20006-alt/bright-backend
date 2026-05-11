@@ -24,7 +24,7 @@ export const MobileBottomNav = () => {
               <NavLink
                 to={it.to}
                 end={it.end}
-                className={({ isActive }) =>
+                className={({ isActive }: { isActive: boolean }) =>
                   cn(
                     "flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] font-semibold transition-colors",
                     isActive
@@ -33,7 +33,7 @@ export const MobileBottomNav = () => {
                   )
                 }
               >
-                {({ isActive }) => (
+                {({ isActive }: { isActive: boolean }) => (
                   <>
                     <span
                       className={cn(

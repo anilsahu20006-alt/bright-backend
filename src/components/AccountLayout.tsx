@@ -29,7 +29,7 @@ export const AccountLayout = ({ children, title }: { children: ReactNode; title:
             <NavLink
               key={i.to}
               to={i.to}
-              className={({ isActive }) =>
+              className={({ isActive }: { isActive: boolean }) =>
                 cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition",
                   isActive ? "bg-brand-soft text-brand" : "text-foreground hover:bg-muted"
