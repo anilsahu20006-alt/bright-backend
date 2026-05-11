@@ -186,6 +186,7 @@ const HomePage = () => {
       </section>
 
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
