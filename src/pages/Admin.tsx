@@ -150,7 +150,7 @@ const ApplicationsTab = () => {
       headers.join(","),
       ...filtered.map((r) => [
         r.appId, r.service, r.fullName, r.phone, r.email, r.status, r.submittedAt,
-        (r.docs?.map((d) => `${d.label}: ${d.url}`).join(" | ")) || (r.documents?.join(" | ") ?? ""),
+        (r.docs?.map((d: any) => `${d.label}: ${d.url}`).join(" | ")) || (r.documents?.join(" | ") ?? ""),
       ].map(escape).join(",")),
     ].join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -275,7 +275,7 @@ const DocsModal = ({ row, onClose }: { row: AppRow; onClose: () => void }) => (
         </div>
         {row.docs && row.docs.length ? (
           <div className="grid sm:grid-cols-2 gap-4">
-            {row.docs.map((d, i) => {
+            {row.docs.map((d: any, i: number) => {
               const isImg = d.type?.startsWith("image/") || d.url?.startsWith("data:image/");
               const isPdf = d.type === "application/pdf" || d.url?.startsWith("data:application/pdf");
               return (
@@ -308,7 +308,7 @@ const DocsModal = ({ row, onClose }: { row: AppRow; onClose: () => void }) => (
           </div>
         ) : row.documents && row.documents.length ? (
           <ul className="space-y-2 text-sm">
-            {row.documents.map((d, i) => <li key={i} className="rounded-md border border-border p-3 bg-muted/30">{d}</li>)}
+            {row.documents.map((d: string, i: number) => <li key={i} className="rounded-md border border-border p-3 bg-muted/30">{d}</li>)}
             <p className="text-xs text-muted-foreground mt-3">⚠️ Legacy entries — file previews not available.</p>
           </ul>
         ) : (
