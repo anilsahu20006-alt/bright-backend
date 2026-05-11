@@ -116,9 +116,14 @@ create index if not exists applications_created_at_idx on public.applications(cr
 alter table public.applications enable row level security;
 
 drop policy if exists "Applications: insert own or anon" on public.applications;
+drop policy if exists "Anyone can submit applications" on public.applications;
 create policy "Applications: insert own or anon" on public.applications
   for insert to anon, authenticated
   with check (user_id is null or auth.uid() = user_id);
+
+grant usage on schema public to anon, authenticated;
+grant insert on public.applications to anon, authenticated;
+grant select, update, delete on public.applications to authenticated;
 
 drop policy if exists "Applications: read own" on public.applications;
 create policy "Applications: read own" on public.applications
