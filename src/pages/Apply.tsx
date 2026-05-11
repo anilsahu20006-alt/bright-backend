@@ -7,6 +7,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
 import { createApplication, uploadDocFile, updateApplicationDocs, compressImage, type AppDoc } from "@/lib/data";
+import { useAuth } from "@/hooks/use-auth";
 
 const REQUIRED_DOCS = [
   { key: "aadhaar", label: "Aadhaar Card", icon: IdCard, hint: "Front & back, PDF or JPG", required: true },
@@ -28,6 +29,7 @@ const applicantSchema = z.object({
 const Apply = () => {
   const { name } = useParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const title = decodeURIComponent(name || "Application Form");
   const [files, setFiles] = useState<Record<string, File>>({});
   const [form, setForm] = useState({ fullName: "", phone: "", email: "" });
@@ -53,6 +55,15 @@ const Apply = () => {
   const progress = Math.round((completed / REQUIRED_DOCS.length) * 100);
 
   const handleSubmit = async () => {
+    if (authLoading) return;
+    if (!user) {
+      toast({
+        title: "Please sign in to submit",
+        description: "Create a free account or log in to track your application.",
+      });
+      navigate("/account");
+      return;
+    }
     const parsed = applicantSchema.safeParse(form);
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
