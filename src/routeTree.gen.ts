@@ -20,6 +20,7 @@ import { Route as FormNameRouteImport } from './routes/form.$name'
 import { Route as ApplyNameRouteImport } from './routes/apply.$name'
 import { Route as AccountWalletRouteImport } from './routes/account.wallet'
 import { Route as AccountProfileRouteImport } from './routes/account.profile'
+import { Route as AccountOrdersRouteImport } from './routes/account.orders'
 import { Route as AccountApplicationsRouteImport } from './routes/account.applications'
 
 const ThankYouRoute = ThankYouRouteImport.update({
@@ -77,6 +78,11 @@ const AccountProfileRoute = AccountProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AccountRoute,
 } as any)
+const AccountOrdersRoute = AccountOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AccountRoute,
+} as any)
 const AccountApplicationsRoute = AccountApplicationsRouteImport.update({
   id: '/applications',
   path: '/applications',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/thank-you': typeof ThankYouRoute
   '/account/applications': typeof AccountApplicationsRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/wallet': typeof AccountWalletRoute
   '/apply/$name': typeof ApplyNameRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/thank-you': typeof ThankYouRoute
   '/account/applications': typeof AccountApplicationsRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/wallet': typeof AccountWalletRoute
   '/apply/$name': typeof ApplyNameRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/thank-you': typeof ThankYouRoute
   '/account/applications': typeof AccountApplicationsRoute
+  '/account/orders': typeof AccountOrdersRoute
   '/account/profile': typeof AccountProfileRoute
   '/account/wallet': typeof AccountWalletRoute
   '/apply/$name': typeof ApplyNameRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/thank-you'
     | '/account/applications'
+    | '/account/orders'
     | '/account/profile'
     | '/account/wallet'
     | '/apply/$name'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/thank-you'
     | '/account/applications'
+    | '/account/orders'
     | '/account/profile'
     | '/account/wallet'
     | '/apply/$name'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/thank-you'
     | '/account/applications'
+    | '/account/orders'
     | '/account/profile'
     | '/account/wallet'
     | '/apply/$name'
@@ -262,6 +274,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountProfileRouteImport
       parentRoute: typeof AccountRoute
     }
+    '/account/orders': {
+      id: '/account/orders'
+      path: '/orders'
+      fullPath: '/account/orders'
+      preLoaderRoute: typeof AccountOrdersRouteImport
+      parentRoute: typeof AccountRoute
+    }
     '/account/applications': {
       id: '/account/applications'
       path: '/applications'
@@ -274,12 +293,14 @@ declare module '@tanstack/react-router' {
 
 interface AccountRouteChildren {
   AccountApplicationsRoute: typeof AccountApplicationsRoute
+  AccountOrdersRoute: typeof AccountOrdersRoute
   AccountProfileRoute: typeof AccountProfileRoute
   AccountWalletRoute: typeof AccountWalletRoute
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
   AccountApplicationsRoute: AccountApplicationsRoute,
+  AccountOrdersRoute: AccountOrdersRoute,
   AccountProfileRoute: AccountProfileRoute,
   AccountWalletRoute: AccountWalletRoute,
 }
