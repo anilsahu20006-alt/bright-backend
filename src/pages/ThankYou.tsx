@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Link, useLocation, useNavigate } from "@/lib/router-compat";
 import { CheckCircle2, FileText, Home, MessageCircle, Download, Clock, ShieldCheck } from "lucide-react";
 import { useEffect } from "react";
@@ -157,7 +156,7 @@ Thank you for choosing Digital Service.
       </section>
 
       <Footer />
-      <WhatsAppButton />
+      
     </div>
   );
 };
