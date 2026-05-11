@@ -29,7 +29,7 @@ const applicantSchema = z.object({
 const Apply = () => {
   const { name } = useParams();
   const navigate = useNavigate();
-  const { user, loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth();
   const title = decodeURIComponent(name || "Application Form");
   const [files, setFiles] = useState<Record<string, File>>({});
   const [form, setForm] = useState({ fullName: "", phone: "", email: "" });
