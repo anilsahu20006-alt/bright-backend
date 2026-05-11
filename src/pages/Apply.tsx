@@ -6,7 +6,7 @@ import { ChevronRight, Upload, CheckCircle2, FileText, User, IdCard, Image as Im
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
-import { createApplication, uploadDocFile, updateApplicationDocs, compressImage, type AppDoc } from "@/lib/data";
+import { createApplication, uploadDocFile, compressImage, type AppDoc } from "@/lib/data";
 import { useAuth } from "@/hooks/use-auth";
 
 const REQUIRED_DOCS = [
