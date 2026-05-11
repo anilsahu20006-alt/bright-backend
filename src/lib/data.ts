@@ -62,17 +62,25 @@ function appToRow(data: Omit<AppRow, "id">) {
   };
 }
 
+function createUuid() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+    (Number(c) ^ (Math.random() * 16 >> (Number(c) / 4))).toString(16),
+  );
+}
+
 /* ===== Applications ===== */
 export async function createApplication(data: Omit<AppRow, "id">): Promise<string> {
   const { data: user } = await supabase.auth.getUser();
-  const payload = { ...appToRow(data), user_id: user.user?.id ?? null };
-  const { data: row, error } = await supabase
+  const id = createUuid();
+  const payload = { id, ...appToRow(data), user_id: user.user?.id ?? null };
+  const { error } = await supabase
     .from("applications")
-    .insert(payload)
-    .select("id")
-    .single();
+    .insert(payload);
   if (error) throw error;
-  return row.id as string;
+  return id;
 }
 
 export async function listApplications(): Promise<AppRow[]> {
