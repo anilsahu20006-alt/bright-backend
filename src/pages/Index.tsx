@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { JobBanner } from "@/components/JobBanner";
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-compat";
 import {
   ArrowRight, ChevronRight, GraduationCap, BookOpen, Upload, Clock, FileType, Award,
   CalendarDays, Users, Star, HelpCircle, MessageCircle,

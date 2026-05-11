@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "@/lib/router-compat";
 import { User, FileText, Wallet, ShoppingBag, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";

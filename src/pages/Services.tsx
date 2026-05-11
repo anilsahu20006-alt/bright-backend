@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Search, CalendarDays, Users, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/router-compat";
 import { SERVICES } from "@/data/services";
-import { listServices, type SvcRow } from "@/lib/firebase";
+import { listServices, type SvcRow } from "@/lib/data";
 
 const categories = [
   { id: "all", name: "All Forms" },

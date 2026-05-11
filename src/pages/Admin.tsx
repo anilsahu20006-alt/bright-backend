@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import {
   listApplications, updateApplicationStatus, deleteApplication, type AppRow,
   listServices, createService, updateService, deleteService, uploadServiceImage, type SvcRow,
-} from "@/lib/firebase";
+} from "@/lib/data";
 
 const ADMIN_PASS = "admin@123"; // demo only — front-end gate
 const STATUSES: AppRow["status"][] = ["Submitted", "Processing", "Approved", "Rejected"];

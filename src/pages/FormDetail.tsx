@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "@/lib/router-compat";
 import { CalendarDays, Users, ChevronRight, FileText, CheckCircle2, Clock } from "lucide-react";
 import { getService } from "@/data/services";
 

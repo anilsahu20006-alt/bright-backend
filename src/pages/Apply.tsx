@@ -1,12 +1,12 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "@/lib/router-compat";
 import { ChevronRight, Upload, CheckCircle2, FileText, User, IdCard, Image as ImageIcon, GraduationCap, Receipt, FileSignature, Loader2, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
-import { createApplication, uploadDocFile, updateApplicationDocs, compressImage, type AppDoc } from "@/lib/firebase";
+import { createApplication, uploadDocFile, updateApplicationDocs, compressImage, type AppDoc } from "@/lib/data";
 
 const REQUIRED_DOCS = [
   { key: "aadhaar", label: "Aadhaar Card", icon: IdCard, hint: "Front & back, PDF or JPG", required: true },
