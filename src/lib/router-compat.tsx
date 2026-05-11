@@ -7,52 +7,47 @@ import {
   useSearch as useTSearch,
   Outlet,
 } from "@tanstack/react-router";
-import { forwardRef, type AnchorHTMLAttributes, type ReactNode } from "react";
+import { forwardRef } from "react";
 
-type AnyProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  to: string;
-  state?: unknown;
-  replace?: boolean;
-  children?: ReactNode;
-};
-
-export const Link = forwardRef<HTMLAnchorElement, AnyProps>(
-  ({ to, state, replace, children, ...rest }, ref) => (
-    // @ts-expect-error loose path typing intentional for compat
-    <TLink ref={ref} to={to} state={state as any} replace={replace} {...rest}>
-      {children}
+export const Link = forwardRef<HTMLAnchorElement, any>(function Link(
+  { to, state, replace, children, ...rest },
+  ref,
+) {
+  return (
+    <TLink ref={ref as any} to={to as any} state={state as any} replace={replace} {...(rest as any)}>
+      {children as any}
     </TLink>
-  ),
-);
-Link.displayName = "Link";
+  );
+});
 
-type NavLinkProps = Omit<AnyProps, "className"> & {
+export interface NavLinkProps {
+  to: string;
   end?: boolean;
   className?: string | ((s: { isActive: boolean; isPending: boolean }) => string);
-  children?: ReactNode | ((s: { isActive: boolean; isPending: boolean }) => ReactNode);
-};
+  children?: any;
+  [key: string]: any;
+}
 
-export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(
-  ({ to, end, className, children, ...rest }, ref) => (
-    // @ts-expect-error loose path typing intentional for compat
+export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavLink(
+  { to, end, className, children, ...rest },
+  ref,
+) {
+  return (
     <TLink
-      ref={ref}
-      to={to}
+      ref={ref as any}
+      to={to as any}
       activeOptions={{ exact: !!end }}
-      {...rest}
+      {...(rest as any)}
     >
-      {(state: { isActive: boolean }) => {
+      {((state: any) => {
         const s = { isActive: !!state?.isActive, isPending: false };
         const cls = typeof className === "function" ? className(s) : className;
-        const node = typeof children === "function" ? (children as any)(s) : children;
-        return (
-          <span className={cls}>{node}</span>
-        );
-      }}
+        const node = typeof children === "function" ? children(s) : children;
+        return <span className={cls}>{node}</span>;
+      }) as any}
     </TLink>
-  ),
-);
-NavLink.displayName = "NavLink";
+  );
+});
 
 export function useNavigate() {
   const navigate = useTNav();
@@ -62,8 +57,7 @@ export function useNavigate() {
       return;
     }
     navigate({
-      // @ts-expect-error loose path typing intentional
-      to,
+      to: to as any,
       replace: opts?.replace,
       state: opts?.state as any,
     });
@@ -92,7 +86,10 @@ export function useSearchParams() {
     if (v != null) params.set(k, String(v));
   });
   const setParams = (
-    next: URLSearchParams | ((p: URLSearchParams) => URLSearchParams) | Record<string, string>,
+    next:
+      | URLSearchParams
+      | ((p: URLSearchParams) => URLSearchParams)
+      | Record<string, string>,
   ) => {
     let np: URLSearchParams;
     if (typeof next === "function") np = next(new URLSearchParams(params));
@@ -100,8 +97,7 @@ export function useSearchParams() {
     else np = new URLSearchParams(next);
     const obj: Record<string, string> = {};
     np.forEach((v, k) => (obj[k] = v));
-    // @ts-expect-error loose
-    navigate({ search: obj });
+    navigate({ search: obj as any });
   };
   return [params, setParams] as const;
 }
