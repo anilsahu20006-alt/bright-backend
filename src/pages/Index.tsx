@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { JobBanner } from "@/components/JobBanner";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Link } from "@/lib/router-compat";
 import {
   ArrowRight, ChevronRight, GraduationCap, BookOpen, Upload, Clock, FileType, Award,
@@ -185,6 +186,7 @@ const HomePage = () => {
       </section>
 
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };

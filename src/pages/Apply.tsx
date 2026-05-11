@@ -56,14 +56,6 @@ const Apply = () => {
 
   const handleSubmit = async () => {
     if (authLoading) return;
-    if (!user) {
-      toast({
-        title: "Please sign in to submit",
-        description: "Create a free account or log in to track your application.",
-      });
-      navigate("/account");
-      return;
-    }
     const parsed = applicantSchema.safeParse(form);
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
