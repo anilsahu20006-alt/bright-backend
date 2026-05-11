@@ -85,13 +85,22 @@ const Apply = () => {
       day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
     });
 
-    // 1) Create the application record IMMEDIATELY (no file upload yet) so the user
-    //    is not blocked. Documents are uploaded in the background and patched in.
-    let docRefId: string | null = null;
+    const fileEntries = Object.entries(files);
+    let docs: AppDoc[] = [];
     try {
-      docRefId = await createApplication({
+      const uploaded = await Promise.allSettled(
+        fileEntries.map(async ([key, file]) => {
+          const meta = REQUIRED_DOCS.find((x) => x.key === key);
+          const optimized = await compressImage(file);
+          const up = await uploadDocFile(appId, key, optimized);
+          return { ...up, label: meta?.label || key };
+        })
+      );
+      docs = uploaded.flatMap((result) => result.status === "fulfilled" ? [result.value] : []);
+
+      await createApplication({
         appId, service: title, fullName: form.fullName, phone: form.phone,
-        email: form.email, status: "Processing", submittedAt, docs: [],
+        email: form.email, status: "Processing", submittedAt, docs,
       });
     } catch (err: any) {
       setSubmitting(false);
@@ -109,58 +118,32 @@ const Apply = () => {
       localStorage.setItem("ds_applications", JSON.stringify(prev.slice(0, 50)));
     } catch {}
 
-    // 2) Kick off uploads in the background — compress images first, upload in parallel.
-    const fileEntries = Object.entries(files);
-    const id = docRefId;
-    (async () => {
-      try {
-        const uploaded = await Promise.allSettled(
-          fileEntries.map(async ([key, file]) => {
-            const meta = REQUIRED_DOCS.find((x) => x.key === key);
-            const optimized = await compressImage(file);
-            const up = await uploadDocFile(appId, key, optimized);
-            return { ...up, label: meta?.label || key };
-          })
-        );
-        const docs: AppDoc[] = uploaded.flatMap((result) => result.status === "fulfilled" ? [result.value] : []);
-        if (id) await updateApplicationDocs(id, docs);
+    if (docs.length < fileEntries.length) {
+      toast({
+        title: "Some files need smaller size",
+        description: "Images are saved for admin preview. Large PDFs may need storage permission.",
+        variant: "destructive",
+      });
+    }
 
-        if (docs.length < fileEntries.length) {
-          toast({
-            title: "Some files need smaller size",
-            description: "Images are saved for admin preview. Large PDFs may need Firebase Storage permission.",
-            variant: "destructive",
-          });
-        }
+    try {
+      const adminPhone = "919078014777";
+      const lines = [
+        `*New Application Submitted*`,
+        `*App ID:* ${appId}`,
+        `*Service:* ${title}`,
+        `*Name:* ${form.fullName}`,
+        `*Phone:* ${form.phone}`,
+        `*Email:* ${form.email}`,
+        `*Submitted:* ${submittedAt}`,
+        ``,
+        `*Documents (${docs.length}):*`,
+        ...docs.map((d, i) => `${i + 1}. ${d.label} — ${d.name}\n${d.url}`),
+      ];
+      const msg = encodeURIComponent(lines.join("\n"));
+      window.open(`https://wa.me/${adminPhone}?text=${msg}`, "_blank", "noopener,noreferrer");
+    } catch {}
 
-        // Send WhatsApp notification only after uploads finish so links work.
-        try {
-          const adminPhone = "919078014777";
-          const lines = [
-            `*New Application Submitted*`,
-            `*App ID:* ${appId}`,
-            `*Service:* ${title}`,
-            `*Name:* ${form.fullName}`,
-            `*Phone:* ${form.phone}`,
-            `*Email:* ${form.email}`,
-            `*Submitted:* ${submittedAt}`,
-            ``,
-            `*Documents (${docs.length}):*`,
-            ...docs.map((d, i) => `${i + 1}. ${d.label} — ${d.name}\n${d.url}`),
-          ];
-          const msg = encodeURIComponent(lines.join("\n"));
-          window.open(`https://wa.me/${adminPhone}?text=${msg}`, "_blank", "noopener,noreferrer");
-        } catch {}
-      } catch (err: any) {
-        toast({
-          title: "Some documents failed to upload",
-          description: err?.message || "You can re-submit missing files later.",
-          variant: "destructive",
-        });
-      }
-    })();
-
-    // 3) Navigate to thank-you instantly — user no longer waits for uploads.
     setSubmitting(false);
     navigate("/thank-you", {
       state: {
