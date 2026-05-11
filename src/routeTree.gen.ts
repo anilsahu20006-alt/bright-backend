@@ -9,38 +9,224 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThankYouRouteImport } from './routes/thank-you'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FormNameRouteImport } from './routes/form.$name'
+import { Route as ApplyNameRouteImport } from './routes/apply.$name'
+import { Route as AccountWalletRouteImport } from './routes/account.wallet'
+import { Route as AccountProfileRouteImport } from './routes/account.profile'
+import { Route as AccountApplicationsRouteImport } from './routes/account.applications'
 
+const ThankYouRoute = ThankYouRouteImport.update({
+  id: '/thank-you',
+  path: '/thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormNameRoute = FormNameRouteImport.update({
+  id: '/form/$name',
+  path: '/form/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyNameRoute = ApplyNameRouteImport.update({
+  id: '/apply/$name',
+  path: '/apply/$name',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountWalletRoute = AccountWalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountProfileRoute = AccountProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountApplicationsRoute = AccountApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AccountRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/account': typeof AccountRouteWithChildren
+  '/admin': typeof AdminRoute
+  '/contact': typeof ContactRoute
+  '/services': typeof ServicesRoute
+  '/thank-you': typeof ThankYouRoute
+  '/account/applications': typeof AccountApplicationsRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/wallet': typeof AccountWalletRoute
+  '/apply/$name': typeof ApplyNameRoute
+  '/form/$name': typeof FormNameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/account': typeof AccountRouteWithChildren
+  '/admin': typeof AdminRoute
+  '/contact': typeof ContactRoute
+  '/services': typeof ServicesRoute
+  '/thank-you': typeof ThankYouRoute
+  '/account/applications': typeof AccountApplicationsRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/wallet': typeof AccountWalletRoute
+  '/apply/$name': typeof ApplyNameRoute
+  '/form/$name': typeof FormNameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/account': typeof AccountRouteWithChildren
+  '/admin': typeof AdminRoute
+  '/contact': typeof ContactRoute
+  '/services': typeof ServicesRoute
+  '/thank-you': typeof ThankYouRoute
+  '/account/applications': typeof AccountApplicationsRoute
+  '/account/profile': typeof AccountProfileRoute
+  '/account/wallet': typeof AccountWalletRoute
+  '/apply/$name': typeof ApplyNameRoute
+  '/form/$name': typeof FormNameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/account'
+    | '/admin'
+    | '/contact'
+    | '/services'
+    | '/thank-you'
+    | '/account/applications'
+    | '/account/profile'
+    | '/account/wallet'
+    | '/apply/$name'
+    | '/form/$name'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/account'
+    | '/admin'
+    | '/contact'
+    | '/services'
+    | '/thank-you'
+    | '/account/applications'
+    | '/account/profile'
+    | '/account/wallet'
+    | '/apply/$name'
+    | '/form/$name'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/account'
+    | '/admin'
+    | '/contact'
+    | '/services'
+    | '/thank-you'
+    | '/account/applications'
+    | '/account/profile'
+    | '/account/wallet'
+    | '/apply/$name'
+    | '/form/$name'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AccountRoute: typeof AccountRouteWithChildren
+  AdminRoute: typeof AdminRoute
+  ContactRoute: typeof ContactRoute
+  ServicesRoute: typeof ServicesRoute
+  ThankYouRoute: typeof ThankYouRoute
+  ApplyNameRoute: typeof ApplyNameRoute
+  FormNameRoute: typeof FormNameRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/thank-you': {
+      id: '/thank-you'
+      path: '/thank-you'
+      fullPath: '/thank-you'
+      preLoaderRoute: typeof ThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +234,80 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/form/$name': {
+      id: '/form/$name'
+      path: '/form/$name'
+      fullPath: '/form/$name'
+      preLoaderRoute: typeof FormNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply/$name': {
+      id: '/apply/$name'
+      path: '/apply/$name'
+      fullPath: '/apply/$name'
+      preLoaderRoute: typeof ApplyNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/wallet': {
+      id: '/account/wallet'
+      path: '/wallet'
+      fullPath: '/account/wallet'
+      preLoaderRoute: typeof AccountWalletRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/profile': {
+      id: '/account/profile'
+      path: '/profile'
+      fullPath: '/account/profile'
+      preLoaderRoute: typeof AccountProfileRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/applications': {
+      id: '/account/applications'
+      path: '/applications'
+      fullPath: '/account/applications'
+      preLoaderRoute: typeof AccountApplicationsRouteImport
+      parentRoute: typeof AccountRoute
+    }
   }
 }
 
+interface AccountRouteChildren {
+  AccountApplicationsRoute: typeof AccountApplicationsRoute
+  AccountProfileRoute: typeof AccountProfileRoute
+  AccountWalletRoute: typeof AccountWalletRoute
+}
+
+const AccountRouteChildren: AccountRouteChildren = {
+  AccountApplicationsRoute: AccountApplicationsRoute,
+  AccountProfileRoute: AccountProfileRoute,
+  AccountWalletRoute: AccountWalletRoute,
+}
+
+const AccountRouteWithChildren =
+  AccountRoute._addFileChildren(AccountRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AccountRoute: AccountRouteWithChildren,
+  AdminRoute: AdminRoute,
+  ContactRoute: ContactRoute,
+  ServicesRoute: ServicesRoute,
+  ThankYouRoute: ThankYouRoute,
+  ApplyNameRoute: ApplyNameRoute,
+  FormNameRoute: FormNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
