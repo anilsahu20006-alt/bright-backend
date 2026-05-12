@@ -12,7 +12,7 @@ import {
   listServices, createService, updateService, deleteService, uploadServiceImage, type SvcRow,
 } from "@/lib/data";
 
-const ADMIN_PASS = "admin@123"; // demo only — front-end gate
+const ADMIN_PASS = "Anilsahu@8480"; // demo only — front-end gate
 const STATUSES: AppRow["status"][] = ["Submitted", "Processing", "Approved", "Rejected"];
 
 const Admin = () => {
@@ -48,7 +48,7 @@ const Admin = () => {
             }} className="mt-3 w-full rounded-md bg-deep-green text-white font-semibold py-2.5 hover:opacity-90">
               Sign In
             </button>
-            <p className="text-[11px] text-muted-foreground mt-3">Demo password: <code>admin@123</code></p>
+            
           </div>
         </div>
         <Footer />
