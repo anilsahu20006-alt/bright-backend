@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://digitalservice.example.com/sitemap.xml
